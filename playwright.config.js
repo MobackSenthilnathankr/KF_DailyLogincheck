@@ -42,7 +42,7 @@ module.exports = defineConfig({
     headless: envConfig.keepBrowserOpen ? false : envConfig.headless,
     launchOptions: {
       slowMo: envConfig.slowMo,
-      args: ['--start-maximized'],
+      args: process.env.CI ? ['--no-sandbox'] : ['--start-maximized'],
     },
     viewport: null,
     trace: 'on-first-retry',

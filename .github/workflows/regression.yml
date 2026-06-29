@@ -1,10 +1,6 @@
-name: Playwright Smoke Tests
+name: Playwright Manual E2E Tests
 
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
   workflow_dispatch:
     inputs:
       environment:
@@ -20,22 +16,15 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: playwright-smoke-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  smoke:
-    name: Smoke (${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'qa' }})
-    timeout-minutes: 90
+  regression:
+    name: E2E (${{ inputs.environment }})
+    timeout-minutes: 120
     runs-on: ubuntu-latest
     env:
       CI: true
-      ENV: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'qa' }}
-      SMOKE_ENVIRONMENTS: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'qa' }}
-      BASE_URL: https://home.kornferrytalent-qa.com
-      BASE_URL_DEV: https://home.kornferrytalent-dev.com
-      BASE_URL_STAGE: https://home.kornferrytalent-stage.com
+      ENV: ${{ inputs.environment }}
+      SMOKE_ENVIRONMENTS: ${{ inputs.environment }}
       HEADLESS: true
       KEEP_BROWSER_OPEN: false
       SCENARIO_RETRY_COUNT: 1
@@ -44,6 +33,9 @@ jobs:
       TEST_USERNAME_FALLBACK: ${{ secrets.TEST_USERNAME_FALLBACK }}
       TEST_CLIENT_NAME: ${{ secrets.TEST_CLIENT_NAME }}
       TEST_PAMS_ID: ${{ secrets.TEST_PAMS_ID }}
+      BASE_URL: https://home.kornferrytalent-qa.com
+      BASE_URL_DEV: https://home.kornferrytalent-dev.com
+      BASE_URL_STAGE: https://home.kornferrytalent-stage.com
 
     steps:
       - name: Checkout
@@ -56,14 +48,14 @@ jobs:
         shell: bash
         run: node scripts/validate-ci-secrets.js
 
-      - name: Run smoke tests
-        run: npm run test:smoke
+      - name: Run E2E tests
+        run: npm run test:e2e
 
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ env.ENV }}
+          name: playwright-report-regression-${{ inputs.environment }}
           path: playwright-report/
           retention-days: 30
           if-no-files-found: warn
@@ -72,7 +64,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report-${{ env.ENV }}
+          name: allure-report-regression-${{ inputs.environment }}
           path: allure-report/
           retention-days: 30
           if-no-files-found: warn
@@ -81,25 +73,9 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ env.ENV }}
+          name: test-results-regression-${{ inputs.environment }}
           path: |
             test-results/
             allure-results/
           retention-days: 14
           if-no-files-found: warn
-
-      - name: Publish job summary
-        if: always()
-        shell: bash
-        run: |
-          {
-            echo "## Playwright Smoke Tests"
-            echo ""
-            echo "| Setting | Value |"
-            echo "|---------|-------|"
-            echo "| Environment | \`${{ env.ENV }}\` |"
-            echo "| Trigger | \`${{ github.event_name }}\` |"
-            echo "| Status | \`${{ job.status }}\` |"
-            echo ""
-            echo "Download **playwright-report** or **allure-report** artifacts from this workflow run."
-          } >> "$GITHUB_STEP_SUMMARY"

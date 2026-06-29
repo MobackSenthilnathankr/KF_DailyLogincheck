@@ -94,6 +94,44 @@ Edit `.env` or set environment variables:
 | `HEADLESS` | `true` | Run browsers headless |
 | `ENV` | `dev` | Environment name |
 
-## CI/CD
+## CI/CD (GitHub Actions)
 
-A GitHub Actions workflow is included at `.github/workflows/playwright.yml`. It runs smoke tests on Chromium and uploads the HTML report as an artifact.
+Workflows live under `.github/workflows/`:
+
+| Workflow | File | Trigger |
+|----------|------|---------|
+| Smoke tests | `playwright.yml` | Push/PR to `main`/`master`, manual dispatch |
+| Manual E2E tests | `regression.yml` | Manual dispatch (choose qa/dev/stage) |
+
+Both workflows use the shared setup action at `.github/actions/setup-playwright/` (Node.js, Java for Allure, npm dependencies, Playwright Chrome).
+
+### Required GitHub secrets
+
+Configure these under **Settings → Secrets and variables → Actions**:
+
+| Secret | Required | Description |
+|--------|----------|-------------|
+| `TEST_USERNAME` | Yes | Primary login email |
+| `TEST_PASSWORD` | Yes | Password for non-prod environments |
+| `TEST_USERNAME_FALLBACK` | No | Fallback login if primary fails |
+| `TEST_CLIENT_NAME` | No | Client name when client selection page appears |
+| `TEST_PAMS_ID` | No | PAMS ID for client selection |
+
+Validate secrets locally (simulates CI):
+
+```bash
+set CI=true
+set TEST_USERNAME=your_user
+set TEST_PASSWORD=your_password
+npm run validate:ci
+```
+
+### Artifacts
+
+Each run uploads:
+
+- **playwright-report** — HTML report
+- **allure-report** — single-file Allure HTML report
+- **test-results** — traces, screenshots, and raw Allure results (on failure only)
+
+Download artifacts from the **Actions** tab on the workflow run page.

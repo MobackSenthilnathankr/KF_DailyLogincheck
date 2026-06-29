@@ -1,0 +1,35 @@
+name: Setup Playwright test environment
+description: Install Node.js, Java, npm dependencies, and Playwright browsers
+
+inputs:
+  node-version:
+    description: Node.js version
+    required: false
+    default: '20'
+  browser:
+    description: Playwright browser to install
+    required: false
+    default: chrome
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+
+    - name: Setup Java (Allure reports)
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Install Playwright browsers
+      shell: bash
+      run: npx playwright install --with-deps ${{ inputs.browser }}
