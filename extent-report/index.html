@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login check</title>
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --pass: #22c55e;
+      --fail: #ef4444;
+      --skip: #f59e0b;
+      --header: #1f2937;
+      --accent: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Segoe UI, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .topbar {
+      background: var(--header);
+      color: #fff;
+      padding: 20px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar h1 { margin: 0; font-size: 24px; }
+    .topbar p { margin: 4px 0 0; color: #d1d5db; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .summary-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .summary-card h2 { margin: 0 0 8px; font-size: 14px; color: var(--muted); text-transform: uppercase; }
+    .summary-card .value { font-size: 32px; font-weight: 700; }
+    .summary-card.pass .value { color: var(--pass); }
+    .summary-card.fail .value { color: var(--fail); }
+    .summary-card.skip .value { color: var(--skip); }
+    .panel {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    }
+    .panel h2 { margin-top: 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e5e7eb; }
+    th { width: 180px; color: var(--muted); }
+    .test-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      border-left: 5px solid #d1d5db;
+    }
+    .test-card.pass { border-left-color: var(--pass); }
+    .test-card.fail { border-left-color: var(--fail); }
+    .test-card.skip { border-left-color: var(--skip); }
+    .test-card header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .test-card h3 { margin: 0 0 6px; }
+    .test-card.scenario-card h3 { font-size: 18px; }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .badge.pass { background: #dcfce7; color: #166534; }
+    .badge.fail { background: #fee2e2; color: #991b1b; }
+    .badge.skip { background: #fef3c7; color: #92400e; }
+    .badge.duration { background: #dbeafe; color: #1d4ed8; }
+    .muted { color: var(--muted); margin: 0; }
+    .steps { list-style: none; padding: 0; margin: 16px 0 0; }
+    .step {
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+    .step.pass { border-color: #bbf7d0; }
+    .step.fail { border-color: #fecaca; background: #fff7f7; }
+    .step-status {
+      display: inline-block;
+      min-width: 52px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .step-title { font-weight: 600; }
+    .step-duration { float: right; color: var(--muted); font-size: 12px; }
+    .step-error, .error-block {
+      white-space: pre-wrap;
+      background: #111827;
+      color: #f9fafb;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    .attachments { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 16px; }
+    .attachment img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      background: #fff;
+    }
+    figcaption { margin-bottom: 8px; color: var(--muted); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <h1>Login check</h1>
+      <p>ExtentReports-style Playwright summary</p>
+    </div>
+    <div>22/6/2026, 9:58:21 pm</div>
+  </div>
+  <div class="container">
+    <div class="summary">
+      <div class="summary-card"><h2>Total</h2><div class="value">8</div></div>
+      <div class="summary-card pass"><h2>Passed</h2><div class="value">7</div></div>
+      <div class="summary-card fail"><h2>Failed</h2><div class="value">1</div></div>
+      <div class="summary-card skip"><h2>Skipped</h2><div class="value">0</div></div>
+      <div class="summary-card"><h2>Duration</h2><div class="value">108.45 s</div></div>
+    </div>
+    <div class="panel">
+      <h2>Environment</h2>
+      <table><tr><th>node_version</th><td>v16.16.0</td></tr><tr><th>environment</th><td>dev</td></tr><tr><th>base_url</th><td>https://home.kornferrytalent-qa.com</td></tr><tr><th>username</th><td>kfpay_automation@testfky.com</td></tr></table>
+    </div>
+    <div class="panel">
+      <h2>Scenarios</h2>
+      <section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>1. should login with email and password</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">14.45 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.goto(https://home.kornferrytalent-qa.com/login)</span>
+        <span class="step-duration">471 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(#truste-consent-button)</span>
+        <span class="step-duration">3.61 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.fill(#email-input)</span>
+        <span class="step-duration">40 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(#submit-button)</span>
+        <span class="step-duration">67 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(#password-input)</span>
+        <span class="step-duration">1.86 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.fill(#password-input)</span>
+        <span class="step-duration">35 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(#submit-button)</span>
+        <span class="step-duration">52 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">2.10 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Your Products', { exact: true }).waitFor</span>
+        <span class="step-duration">6.04 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">38 ms</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>2. should open Pay product and verify dashboard link</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">19.69 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Your Products', { exact: true }).waitFor</span>
+        <span class="step-duration">22 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId('Pay').click</span>
+        <span class="step-duration">351 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">1.21 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">18.05 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>3. should open Single Job Pricing and verify Download Job Model</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">5.91 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">17 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.card-content &gt;&gt; internal:has-text=/single job pricing/i)</span>
+        <span class="step-duration">65 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/click here to access our single job pricing app/i).click</span>
+        <span class="step-duration">5.75 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Download Job Model', { exact: true }).waitFor</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>4. should complete HCM integration interest list flow</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">3.16 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().click</span>
+        <span class="step-duration">1.60 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">5 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/Automated HCM Data Integration \(Beta Trial\)/i).scrollIntoViewIfNeeded</span>
+        <span class="step-duration">63 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: /join interest list/i }).scrollIntoViewIfNeeded</span>
+        <span class="step-duration">61 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: /join interest list/i }).click</span>
+        <span class="step-duration">106 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/Join the Automated HCM Data Integration Beta Trial/i).waitFor</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.card-body &gt;&gt; nth=0)</span>
+        <span class="step-duration">863 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.count(.card-body)</span>
+        <span class="step-duration">5 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(.card-body &gt;&gt; nth=12)</span>
+        <span class="step-duration">55 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor</span>
+        <span class="step-duration">12 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: 'Cancel', exact: true }).click</span>
+        <span class="step-duration">66 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().click</span>
+        <span class="step-duration">152 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">5 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">18 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">18 ms</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>5. should open Reward Benchmarking from random country and click filter</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">11.00 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">43 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">Try random country</span>
+        <span class="step-duration">10.93 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.count(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/)</span>
+        <span class="step-duration">4 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=1)</span>
+        <span class="step-duration">49 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=1)</span>
+        <span class="step-duration">56 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">1.01 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(kfpayh-mask)</span>
+        <span class="step-duration">57 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(kfpayh-mask)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(a &gt;&gt; internal:has-text=/^Interactive Reports$/ &gt;&gt; nth=-1)</span>
+        <span class="step-duration">55 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/^View Reward Benchmarking$/).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/^View Reward Benchmarking$/).first().click</span>
+        <span class="step-duration">81 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Reward Benchmarking', { exact: true }).first().waitFor</span>
+        <span class="step-duration">4.47 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">5.04 s</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>6. should verify onboarding page and leaderboard navigation links</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">31.33 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">keyboard.press(Escape)</span>
+        <span class="step-duration">20 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.isVisible(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step fail" style="margin-left:18px">
+        <span class="step-status">FAIL</span>
+        <span class="step-title">locator.click(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">15.00 s</span>
+        <pre class="step-error">locator.click: Timeout 15000ms exceeded.
+=========================== logs ===========================
+waiting for locator('kfpayh-report-filters-bar').getByText('Filters', { exact: true })
+  locator resolved to &lt;div size=&quot;xs&quot; kf-text=&quot;&quot; color=&quot;cerulean&quot; _nghost-ng…&gt;Filters&lt;/div&gt;
+attempting click action
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #1
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #2
+  waiting 20ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #3
+  waiting 100ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #4
+  waiting 100ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #5
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #6
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #7
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #8
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #9
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #10
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #11
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #12
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #13
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #14
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #15
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #16
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #17
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #18
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #19
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #20
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #21
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #22
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #23
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #24
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #25
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #26
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #27
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #28
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #29
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #30
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #31
+  waiting 500ms
+============================================================</pre>
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().click</span>
+        <span class="step-duration">309 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">18 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">43 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId('global-nav-menu-btn').waitFor</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId('global-nav-menu-btn').click</span>
+        <span class="step-duration">103 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Explore tools and features', { exact: true }).waitFor</span>
+        <span class="step-duration">1.39 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId(/^nav-menu-item/).filter({ hasText: 'Organization Data' }).click</span>
+        <span class="step-duration">302 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">394 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('link', { name: 'Leaderboard' }).waitFor</span>
+        <span class="step-duration">6.76 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/Welcome.*set up your organization/i).isVisible</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">12 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('link', { name: 'Leaderboard' }).click</span>
+        <span class="step-duration">331 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">935 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Onboarding', { exact: true }).first().waitFor</span>
+        <span class="step-duration">5.47 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Submission', { exact: true }).first().waitFor</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card pass">
+        <header>
+          <div>
+            <h3>7. should open Compensation and Benefit survey and verify title</h3>
+          </div>
+          <div class="badges">
+            <span class="badge pass">PASS</span>
+            <span class="badge duration">16.04 s</span>
+          </div>
+        </header>
+        
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">20 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Onboarding', { exact: true }).first().waitFor</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Submission', { exact: true }).first().waitFor</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor</span>
+        <span class="step-duration">12 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible</span>
+        <span class="step-duration">22 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">39 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForTimeout</span>
+        <span class="step-duration">504 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().scrollIntoViewIfNeeded</span>
+        <span class="step-duration">70 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().click</span>
+        <span class="step-duration">13.79 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).waitFor</span>
+        <span class="step-duration">1.43 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">33 ms</span>
+        
+      </li></ul>
+      </section><section class="test-card scenario-card fail">
+        <header>
+          <div>
+            <h3>8. should complete data submission leaderboard and multi-entity flow</h3>
+          </div>
+          <div class="badges">
+            <span class="badge fail">FAIL</span>
+            <span class="badge duration">3.13 s</span>
+          </div>
+        </header>
+        <pre class="error-block">Multi-Entity link is disabled for this account</pre>
+        <ul class="steps"><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.isVisible(b.tab-header &gt;&gt; internal:has-text=/^Data Submission$/)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForTimeout</span>
+        <span class="step-duration">509 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(b.tab-header &gt;&gt; internal:has-text=/^Data Submission$/)</span>
+        <span class="step-duration">29 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(b.tab-header &gt;&gt; internal:has-text=/^Data Submission$/)</span>
+        <span class="step-duration">42 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">19 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">27 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.hover(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">48 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(a.leaderboard-text)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(a.leaderboard-text)</span>
+        <span class="step-duration">49 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForTimeout</span>
+        <span class="step-duration">2.00 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Groups', { exact: true }).isVisible</span>
+        <span class="step-duration">24 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.isVisible(button &gt;&gt; internal:has-text=/^Company$|^Country$/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(button &gt;&gt; internal:has-text=/^Company$|^Country$/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">36 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(button &gt;&gt; internal:has-text=/^Company$|^Country$/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">39 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('menuitem', { name: 'Data Groups' }).or(getByText('Data Groups', { exact: true })).isVisible</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Groups', { exact: true }).or(getByText('Assigned To You', { exact: true })).first().waitFor</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">47 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.hover(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">47 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(a.leaderboard-text)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(a.multi-entity-text)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getAttribute(a.multi-entity-text)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.screenshot</span>
+        <span class="step-duration">144 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">attach &quot;screenshot&quot;</span>
+        <span class="step-duration">1 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">afterAll hook</span>
+        <span class="step-duration">262 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">browserContext.close</span>
+        <span class="step-duration">67 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">attach &quot;screenshot&quot;</span>
+        <span class="step-duration">2 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">fixture: browser</span>
+        <span class="step-duration">745 ms</span>
+        
+      </li></ul>
+      </section>
+    </div>
+    <div class="panel">
+      <h2>Test Suites</h2>
+      <section class="test-card fail">
+        <header>
+          <div>
+            <h3>smoke test suite @smoke</h3>
+            <p class="muted">tests\smoke\login.spec.js</p>
+          </div>
+          <div class="badges">
+            <span class="badge fail">FAIL</span>
+            <span class="badge duration">104.91 s</span>
+          </div>
+        </header>
+        <pre class="error-block">1 scenario(s) failed: should complete data submission leaderboard and multi-entity flow</pre>
+        <ul class="steps"><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">Before Hooks</span>
+        <span class="step-duration">1.21 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">beforeAll hook</span>
+        <span class="step-duration">1.19 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">fixture: browser</span>
+        <span class="step-duration">682 ms</span>
+        
+      </li><li class="step pass" style="margin-left:54px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">browserType.launch</span>
+        <span class="step-duration">679 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">browser.newContext</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">browserContext.newPage</span>
+        <span class="step-duration">430 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should login with email and password</span>
+        <span class="step-duration">14.45 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.goto(https://home.kornferrytalent-qa.com/login)</span>
+        <span class="step-duration">471 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(#truste-consent-button)</span>
+        <span class="step-duration">3.61 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.fill(#email-input)</span>
+        <span class="step-duration">40 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(#submit-button)</span>
+        <span class="step-duration">67 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(#password-input)</span>
+        <span class="step-duration">1.86 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.fill(#password-input)</span>
+        <span class="step-duration">35 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(#submit-button)</span>
+        <span class="step-duration">52 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">2.10 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Your Products', { exact: true }).waitFor</span>
+        <span class="step-duration">6.04 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">38 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should open Pay product and verify dashboard link</span>
+        <span class="step-duration">19.69 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Your Products', { exact: true }).waitFor</span>
+        <span class="step-duration">22 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId('Pay').click</span>
+        <span class="step-duration">351 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">1.21 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">18.05 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should open Single Job Pricing and verify Download Job Model</span>
+        <span class="step-duration">5.91 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">17 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.card-content &gt;&gt; internal:has-text=/single job pricing/i)</span>
+        <span class="step-duration">65 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/click here to access our single job pricing app/i).click</span>
+        <span class="step-duration">5.75 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Download Job Model', { exact: true }).waitFor</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should complete HCM integration interest list flow</span>
+        <span class="step-duration">3.16 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().click</span>
+        <span class="step-duration">1.60 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">5 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/Automated HCM Data Integration \(Beta Trial\)/i).scrollIntoViewIfNeeded</span>
+        <span class="step-duration">63 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: /join interest list/i }).scrollIntoViewIfNeeded</span>
+        <span class="step-duration">61 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: /join interest list/i }).click</span>
+        <span class="step-duration">106 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/Join the Automated HCM Data Integration Beta Trial/i).waitFor</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.card-body &gt;&gt; nth=0)</span>
+        <span class="step-duration">863 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.count(.card-body)</span>
+        <span class="step-duration">5 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(.card-body &gt;&gt; nth=12)</span>
+        <span class="step-duration">55 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor</span>
+        <span class="step-duration">12 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: 'Cancel', exact: true }).click</span>
+        <span class="step-duration">66 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().click</span>
+        <span class="step-duration">152 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">5 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">18 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">18 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should open Reward Benchmarking from random country and click filter</span>
+        <span class="step-duration">11.00 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">43 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">Try random country</span>
+        <span class="step-duration">10.93 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.count(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/)</span>
+        <span class="step-duration">4 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=1)</span>
+        <span class="step-duration">49 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=1)</span>
+        <span class="step-duration">56 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">1.01 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(kfpayh-mask)</span>
+        <span class="step-duration">57 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(kfpayh-mask)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(a &gt;&gt; internal:has-text=/^Interactive Reports$/ &gt;&gt; nth=-1)</span>
+        <span class="step-duration">55 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/^View Reward Benchmarking$/).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/^View Reward Benchmarking$/).first().click</span>
+        <span class="step-duration">81 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Reward Benchmarking', { exact: true }).first().waitFor</span>
+        <span class="step-duration">4.47 s</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">5.04 s</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should verify onboarding page and leaderboard navigation links</span>
+        <span class="step-duration">31.33 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">keyboard.press(Escape)</span>
+        <span class="step-duration">20 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.isVisible(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step fail" style="margin-left:18px">
+        <span class="step-status">FAIL</span>
+        <span class="step-title">locator.click(kfpayh-report-filters-bar &gt;&gt; internal:text=&quot;Filters&quot;s)</span>
+        <span class="step-duration">15.00 s</span>
+        <pre class="step-error">locator.click: Timeout 15000ms exceeded.
+=========================== logs ===========================
+waiting for locator('kfpayh-report-filters-bar').getByText('Filters', { exact: true })
+  locator resolved to &lt;div size=&quot;xs&quot; kf-text=&quot;&quot; color=&quot;cerulean&quot; _nghost-ng…&gt;Filters&lt;/div&gt;
+attempting click action
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #1
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #2
+  waiting 20ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #3
+  waiting 100ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #4
+  waiting 100ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #5
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #6
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #7
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #8
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #9
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #10
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #11
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #12
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #13
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #14
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #15
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #16
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #17
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #18
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #19
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #20
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #21
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #22
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #23
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #24
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #25
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #26
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #27
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #28
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #29
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #30
+  waiting 500ms
+  waiting for element to be visible, enabled and stable
+  element is visible, enabled and stable
+  scrolling into view if needed
+  done scrolling
+  &lt;button class=&quot;half&quot; _ngcontent-ng-c2281559659=&quot;&quot;&gt;…&lt;/button&gt; from &lt;kfpayh-floating-slider _nghost-ng-c3446459309=&quot;&quot; _ngcontent-ng-c1912319…&gt;…&lt;/kfpayh-floating-slider&gt; subtree intercepts pointer events
+retrying click action, attempt #31
+  waiting 500ms
+============================================================</pre>
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().click</span>
+        <span class="step-duration">309 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">18 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Dashboard', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.secondary-country a &gt;&gt; internal:has-not-text=/Level &amp; Function|Model Job Match &amp; Level/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">43 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId('global-nav-menu-btn').waitFor</span>
+        <span class="step-duration">14 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId('global-nav-menu-btn').click</span>
+        <span class="step-duration">103 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Explore tools and features', { exact: true }).waitFor</span>
+        <span class="step-duration">1.39 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByTestId(/^nav-menu-item/).filter({ hasText: 'Organization Data' }).click</span>
+        <span class="step-duration">302 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">394 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('link', { name: 'Leaderboard' }).waitFor</span>
+        <span class="step-duration">6.76 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText(/Welcome.*set up your organization/i).isVisible</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">12 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('link', { name: 'Leaderboard' }).click</span>
+        <span class="step-duration">331 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">935 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Onboarding', { exact: true }).first().waitFor</span>
+        <span class="step-duration">5.47 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Submission', { exact: true }).first().waitFor</span>
+        <span class="step-duration">10 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">11 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">should open Compensation and Benefit survey and verify title</span>
+        <span class="step-duration">16.04 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForURL</span>
+        <span class="step-duration">20 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Onboarding', { exact: true }).first().waitFor</span>
+        <span class="step-duration">13 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Submission', { exact: true }).first().waitFor</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor</span>
+        <span class="step-duration">12 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible</span>
+        <span class="step-duration">22 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">39 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForTimeout</span>
+        <span class="step-duration">504 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().scrollIntoViewIfNeeded</span>
+        <span class="step-duration">70 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Compensation and Benefit survey', { exact: true }).first().click</span>
+        <span class="step-duration">13.79 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).waitFor</span>
+        <span class="step-duration">1.43 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">33 ms</span>
+        
+      </li><li class="step fail" style="margin-left:0px">
+        <span class="step-status">FAIL</span>
+        <span class="step-title">should complete data submission leaderboard and multi-entity flow</span>
+        <span class="step-duration">3.13 s</span>
+        <pre class="step-error">Multi-Entity link is disabled for this account</pre>
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.isVisible(b.tab-header &gt;&gt; internal:has-text=/^Data Submission$/)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForTimeout</span>
+        <span class="step-duration">509 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(b.tab-header &gt;&gt; internal:has-text=/^Data Submission$/)</span>
+        <span class="step-duration">29 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(b.tab-header &gt;&gt; internal:has-text=/^Data Submission$/)</span>
+        <span class="step-duration">42 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">19 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">27 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.hover(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">48 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(a.leaderboard-text)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(a.leaderboard-text)</span>
+        <span class="step-duration">49 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.waitForTimeout</span>
+        <span class="step-duration">2.00 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Groups', { exact: true }).isVisible</span>
+        <span class="step-duration">24 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.isVisible(button &gt;&gt; internal:has-text=/^Company$|^Country$/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">mouse.move</span>
+        <span class="step-duration">15 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(button &gt;&gt; internal:has-text=/^Company$|^Country$/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">36 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.click(button &gt;&gt; internal:has-text=/^Company$|^Country$/ &gt;&gt; nth=0)</span>
+        <span class="step-duration">39 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByRole('menuitem', { name: 'Data Groups' }).or(getByText('Data Groups', { exact: true })).isVisible</span>
+        <span class="step-duration">8 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getByText('Data Groups', { exact: true }).or(getByText('Assigned To You', { exact: true })).first().waitFor</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">expect.toBeVisible</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">9 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.scrollIntoViewIfNeeded(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">47 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.hover(.data-submission-tab-width &gt;&gt; nth=0)</span>
+        <span class="step-duration">47 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(a.leaderboard-text)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.waitFor(a.multi-entity-text)</span>
+        <span class="step-duration">6 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">locator.getAttribute(a.multi-entity-text)</span>
+        <span class="step-duration">7 ms</span>
+        
+      </li><li class="step pass" style="margin-left:0px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">After Hooks</span>
+        <span class="step-duration">1.18 s</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">page.screenshot</span>
+        <span class="step-duration">144 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">attach &quot;screenshot&quot;</span>
+        <span class="step-duration">1 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">afterAll hook</span>
+        <span class="step-duration">262 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">browserContext.close</span>
+        <span class="step-duration">67 ms</span>
+        
+      </li><li class="step pass" style="margin-left:36px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">attach &quot;screenshot&quot;</span>
+        <span class="step-duration">2 ms</span>
+        
+      </li><li class="step pass" style="margin-left:18px">
+        <span class="step-status">PASS</span>
+        <span class="step-title">fixture: browser</span>
+        <span class="step-duration">745 ms</span>
+        
+      </li></ul>
+        <div class="attachments"><figure class="attachment">
+          <figcaption>screenshot</figcaption>
+          <img src="screenshots/1782145701988-test-failed-1.png" alt="screenshot" />
+        </figure><figure class="attachment">
+          <figcaption>screenshot</figcaption>
+          <img src="screenshots/1782145701997-test-failed-2.png" alt="screenshot" />
+        </figure></div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

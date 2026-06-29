@@ -1,0 +1,2220 @@
+{
+  "reportTitle": "Login check",
+  "environment": {
+    "node_version": "v16.16.0",
+    "environment": "dev",
+    "base_url": "https://home.kornferrytalent-qa.com",
+    "username": "kfpay_automation@testfky.com"
+  },
+  "tests": [
+    {
+      "title": "smoke test suite @smoke",
+      "file": "tests\\smoke\\login.spec.js",
+      "status": "failed",
+      "duration": 104909,
+      "error": "1 scenario(s) failed: should complete data submission leaderboard and multi-entity flow",
+      "steps": [
+        {
+          "title": "Before Hooks",
+          "status": "pass",
+          "duration": 1212,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "beforeAll hook",
+          "status": "pass",
+          "duration": 1190,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "fixture: browser",
+          "status": "pass",
+          "duration": 682,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "browserType.launch",
+          "status": "pass",
+          "duration": 679,
+          "depth": 3,
+          "error": ""
+        },
+        {
+          "title": "browser.newContext",
+          "status": "pass",
+          "duration": 11,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "browserContext.newPage",
+          "status": "pass",
+          "duration": 430,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "should login with email and password",
+          "status": "pass",
+          "duration": 14445,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "page.goto(https://home.kornferrytalent-qa.com/login)",
+          "status": "pass",
+          "duration": 471,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(#truste-consent-button)",
+          "status": "pass",
+          "duration": 3609,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.fill(#email-input)",
+          "status": "pass",
+          "duration": 40,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(#submit-button)",
+          "status": "pass",
+          "duration": 67,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(#password-input)",
+          "status": "pass",
+          "duration": 1861,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.fill(#password-input)",
+          "status": "pass",
+          "duration": 35,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(#submit-button)",
+          "status": "pass",
+          "duration": 52,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 2101,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 14,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Your Products', { exact: true }).waitFor",
+          "status": "pass",
+          "duration": 6039,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 38,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "should open Pay product and verify dashboard link",
+          "status": "pass",
+          "duration": 19690,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 15,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Your Products', { exact: true }).waitFor",
+          "status": "pass",
+          "duration": 22,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByTestId('Pay').click",
+          "status": "pass",
+          "duration": 351,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 1206,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 18052,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 14,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "should open Single Job Pricing and verify Download Job Model",
+          "status": "pass",
+          "duration": 5910,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 17,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 10,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(.card-content >> internal:has-text=/single job pricing/i)",
+          "status": "pass",
+          "duration": 65,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText(/click here to access our single job pricing app/i).click",
+          "status": "pass",
+          "duration": 5748,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 10,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 10,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Download Job Model', { exact: true }).waitFor",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 13,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "should complete HCM integration interest list flow",
+          "status": "pass",
+          "duration": 3162,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 15,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().click",
+          "status": "pass",
+          "duration": 1597,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 5,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText(/Automated HCM Data Integration \\(Beta Trial\\)/i).scrollIntoViewIfNeeded",
+          "status": "pass",
+          "duration": 63,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('button', { name: /join interest list/i }).scrollIntoViewIfNeeded",
+          "status": "pass",
+          "duration": 61,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('button', { name: /join interest list/i }).click",
+          "status": "pass",
+          "duration": 106,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 13,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 14,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText(/Join the Automated HCM Data Integration Beta Trial/i).waitFor",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(.card-body >> nth=0)",
+          "status": "pass",
+          "duration": 863,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.count(.card-body)",
+          "status": "pass",
+          "duration": 5,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(.card-body >> nth=12)",
+          "status": "pass",
+          "duration": 55,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor",
+          "status": "pass",
+          "duration": 12,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('button', { name: 'Cancel', exact: true }).click",
+          "status": "pass",
+          "duration": 66,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().click",
+          "status": "pass",
+          "duration": 152,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 5,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 18,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 18,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "should open Reward Benchmarking from random country and click filter",
+          "status": "pass",
+          "duration": 11000,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 13,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=0)",
+          "status": "pass",
+          "duration": 43,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "Try random country",
+          "status": "pass",
+          "duration": 10928,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=0)",
+          "status": "pass",
+          "duration": 7,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.count(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/)",
+          "status": "pass",
+          "duration": 4,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=1)",
+          "status": "pass",
+          "duration": 49,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.click(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=1)",
+          "status": "pass",
+          "duration": 56,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 1006,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 7,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(kfpayh-mask)",
+          "status": "pass",
+          "duration": 57,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(kfpayh-mask)",
+          "status": "pass",
+          "duration": 6,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.click(a >> internal:has-text=/^Interactive Reports$/ >> nth=-1)",
+          "status": "pass",
+          "duration": 55,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText(/^View Reward Benchmarking$/).first().waitFor",
+          "status": "pass",
+          "duration": 8,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText(/^View Reward Benchmarking$/).first().click",
+          "status": "pass",
+          "duration": 81,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 7,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 9,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Reward Benchmarking', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 4466,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+          "status": "pass",
+          "duration": 6,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 14,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 7,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "locator.click(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+          "status": "pass",
+          "duration": 5043,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "should verify onboarding page and leaderboard navigation links",
+          "status": "pass",
+          "duration": 31332,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "keyboard.press(Escape)",
+          "status": "pass",
+          "duration": 20,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.isVisible(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+          "status": "pass",
+          "duration": 11,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+          "status": "fail",
+          "duration": 15001,
+          "depth": 1,
+          "error": "locator.click: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for locator('kfpayh-report-filters-bar').getByText('Filters', { exact: true })\n  locator resolved to <div size=\"xs\" kf-text=\"\" color=\"cerulean\" _nghost-ng…>Filters</div>\nattempting click action\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #1\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #2\n  waiting 20ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #3\n  waiting 100ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #4\n  waiting 100ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #5\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #6\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #7\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #8\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #9\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #10\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #11\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #12\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #13\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #14\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #15\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #16\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #17\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #18\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #19\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #20\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #21\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #22\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #23\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #24\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #25\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #26\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #27\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #28\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #29\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #30\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #31\n  waiting 500ms\n============================================================"
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().click",
+          "status": "pass",
+          "duration": 309,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 11,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 18,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=0)",
+          "status": "pass",
+          "duration": 43,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByTestId('global-nav-menu-btn').waitFor",
+          "status": "pass",
+          "duration": 14,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByTestId('global-nav-menu-btn').click",
+          "status": "pass",
+          "duration": 103,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Explore tools and features', { exact: true }).waitFor",
+          "status": "pass",
+          "duration": 1386,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByTestId(/^nav-menu-item/).filter({ hasText: 'Organization Data' }).click",
+          "status": "pass",
+          "duration": 302,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 394,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 10,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('link', { name: 'Leaderboard' }).waitFor",
+          "status": "pass",
+          "duration": 6757,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText(/Welcome.*set up your organization/i).isVisible",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 10,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 12,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('link', { name: 'Leaderboard' }).click",
+          "status": "pass",
+          "duration": 331,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 935,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Onboarding', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 5475,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Data Submission', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 10,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 11,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 15,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "should open Compensation and Benefit survey and verify title",
+          "status": "pass",
+          "duration": 16038,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "page.waitForURL",
+          "status": "pass",
+          "duration": 20,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Onboarding', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 13,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Data Submission', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 15,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 12,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible",
+          "status": "pass",
+          "duration": 22,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "mouse.move",
+          "status": "pass",
+          "duration": 39,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForTimeout",
+          "status": "pass",
+          "duration": 504,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().scrollIntoViewIfNeeded",
+          "status": "pass",
+          "duration": 70,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().click",
+          "status": "pass",
+          "duration": 13790,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).waitFor",
+          "status": "pass",
+          "duration": 1432,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 33,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "should complete data submission leaderboard and multi-entity flow",
+          "status": "fail",
+          "duration": 3133,
+          "depth": 0,
+          "error": "Multi-Entity link is disabled for this account"
+        },
+        {
+          "title": "locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.isVisible(b.tab-header >> internal:has-text=/^Data Submission$/)",
+          "status": "pass",
+          "duration": 7,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "mouse.move",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForTimeout",
+          "status": "pass",
+          "duration": 509,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(b.tab-header >> internal:has-text=/^Data Submission$/)",
+          "status": "pass",
+          "duration": 29,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(b.tab-header >> internal:has-text=/^Data Submission$/)",
+          "status": "pass",
+          "duration": 42,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 19,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 27,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.hover(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 48,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(a.leaderboard-text)",
+          "status": "pass",
+          "duration": 7,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(a.leaderboard-text)",
+          "status": "pass",
+          "duration": 49,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "page.waitForTimeout",
+          "status": "pass",
+          "duration": 2003,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "mouse.move",
+          "status": "pass",
+          "duration": 15,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Data Groups', { exact: true }).isVisible",
+          "status": "pass",
+          "duration": 24,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.isVisible(button >> internal:has-text=/^Company$|^Country$/ >> nth=0)",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "mouse.move",
+          "status": "pass",
+          "duration": 15,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(button >> internal:has-text=/^Company$|^Country$/ >> nth=0)",
+          "status": "pass",
+          "duration": 36,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.click(button >> internal:has-text=/^Company$|^Country$/ >> nth=0)",
+          "status": "pass",
+          "duration": 39,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByRole('menuitem', { name: 'Data Groups' }).or(getByText('Data Groups', { exact: true })).isVisible",
+          "status": "pass",
+          "duration": 8,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getByText('Data Groups', { exact: true }).or(getByText('Assigned To You', { exact: true })).first().waitFor",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "expect.toBeVisible",
+          "status": "pass",
+          "duration": 7,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 9,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.scrollIntoViewIfNeeded(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 47,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.hover(.data-submission-tab-width >> nth=0)",
+          "status": "pass",
+          "duration": 47,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(a.leaderboard-text)",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.waitFor(a.multi-entity-text)",
+          "status": "pass",
+          "duration": 6,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "locator.getAttribute(a.multi-entity-text)",
+          "status": "pass",
+          "duration": 7,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "After Hooks",
+          "status": "pass",
+          "duration": 1182,
+          "depth": 0,
+          "error": ""
+        },
+        {
+          "title": "page.screenshot",
+          "status": "pass",
+          "duration": 144,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "attach \"screenshot\"",
+          "status": "pass",
+          "duration": 1,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "afterAll hook",
+          "status": "pass",
+          "duration": 262,
+          "depth": 1,
+          "error": ""
+        },
+        {
+          "title": "browserContext.close",
+          "status": "pass",
+          "duration": 67,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "attach \"screenshot\"",
+          "status": "pass",
+          "duration": 2,
+          "depth": 2,
+          "error": ""
+        },
+        {
+          "title": "fixture: browser",
+          "status": "pass",
+          "duration": 745,
+          "depth": 1,
+          "error": ""
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "should login with email and password",
+          "status": "pass",
+          "duration": 14445,
+          "error": "",
+          "steps": [
+            {
+              "title": "page.goto(https://home.kornferrytalent-qa.com/login)",
+              "status": "pass",
+              "duration": 471,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(#truste-consent-button)",
+              "status": "pass",
+              "duration": 3609,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.fill(#email-input)",
+              "status": "pass",
+              "duration": 40,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(#submit-button)",
+              "status": "pass",
+              "duration": 67,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(#password-input)",
+              "status": "pass",
+              "duration": 1861,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.fill(#password-input)",
+              "status": "pass",
+              "duration": 35,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(#submit-button)",
+              "status": "pass",
+              "duration": 52,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 2101,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 14,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Your Products', { exact: true }).waitFor",
+              "status": "pass",
+              "duration": 6039,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 38,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should open Pay product and verify dashboard link",
+          "status": "pass",
+          "duration": 19690,
+          "error": "",
+          "steps": [
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 15,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Your Products', { exact: true }).waitFor",
+              "status": "pass",
+              "duration": 22,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByTestId('Pay').click",
+              "status": "pass",
+              "duration": 351,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 1206,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 18052,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 14,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should open Single Job Pricing and verify Download Job Model",
+          "status": "pass",
+          "duration": 5910,
+          "error": "",
+          "steps": [
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 17,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 10,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(.card-content >> internal:has-text=/single job pricing/i)",
+              "status": "pass",
+              "duration": 65,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText(/click here to access our single job pricing app/i).click",
+              "status": "pass",
+              "duration": 5748,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 10,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 10,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Download Job Model', { exact: true }).waitFor",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 13,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should complete HCM integration interest list flow",
+          "status": "pass",
+          "duration": 3162,
+          "error": "",
+          "steps": [
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 15,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().click",
+              "status": "pass",
+              "duration": 1597,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 5,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText(/Automated HCM Data Integration \\(Beta Trial\\)/i).scrollIntoViewIfNeeded",
+              "status": "pass",
+              "duration": 63,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('button', { name: /join interest list/i }).scrollIntoViewIfNeeded",
+              "status": "pass",
+              "duration": 61,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('button', { name: /join interest list/i }).click",
+              "status": "pass",
+              "duration": 106,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 13,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 14,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText(/Join the Automated HCM Data Integration Beta Trial/i).waitFor",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(.card-body >> nth=0)",
+              "status": "pass",
+              "duration": 863,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.count(.card-body)",
+              "status": "pass",
+              "duration": 5,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(.card-body >> nth=12)",
+              "status": "pass",
+              "duration": 55,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor",
+              "status": "pass",
+              "duration": 12,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('button', { name: 'Cancel', exact: true }).click",
+              "status": "pass",
+              "duration": 66,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('button', { name: 'Cancel', exact: true }).waitFor",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().click",
+              "status": "pass",
+              "duration": 152,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 5,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 18,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 18,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should open Reward Benchmarking from random country and click filter",
+          "status": "pass",
+          "duration": 11000,
+          "error": "",
+          "steps": [
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 13,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=0)",
+              "status": "pass",
+              "duration": 43,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "Try random country",
+              "status": "pass",
+              "duration": 10928,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=0)",
+              "status": "pass",
+              "duration": 7,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.count(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/)",
+              "status": "pass",
+              "duration": 4,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=1)",
+              "status": "pass",
+              "duration": 49,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.click(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=1)",
+              "status": "pass",
+              "duration": 56,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 1006,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 7,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(kfpayh-mask)",
+              "status": "pass",
+              "duration": 57,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(kfpayh-mask)",
+              "status": "pass",
+              "duration": 6,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.click(a >> internal:has-text=/^Interactive Reports$/ >> nth=-1)",
+              "status": "pass",
+              "duration": 55,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText(/^View Reward Benchmarking$/).first().waitFor",
+              "status": "pass",
+              "duration": 8,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText(/^View Reward Benchmarking$/).first().click",
+              "status": "pass",
+              "duration": 81,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 7,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 9,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Reward Benchmarking', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 4466,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+              "status": "pass",
+              "duration": 6,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 14,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 7,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "locator.click(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+              "status": "pass",
+              "duration": 5043,
+              "depth": 2,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should verify onboarding page and leaderboard navigation links",
+          "status": "pass",
+          "duration": 31332,
+          "error": "",
+          "steps": [
+            {
+              "title": "keyboard.press(Escape)",
+              "status": "pass",
+              "duration": 20,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.isVisible(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+              "status": "pass",
+              "duration": 11,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(kfpayh-report-filters-bar >> internal:text=\"Filters\"s)",
+              "status": "fail",
+              "duration": 15001,
+              "depth": 1,
+              "error": "locator.click: Timeout 15000ms exceeded.\n=========================== logs ===========================\nwaiting for locator('kfpayh-report-filters-bar').getByText('Filters', { exact: true })\n  locator resolved to <div size=\"xs\" kf-text=\"\" color=\"cerulean\" _nghost-ng…>Filters</div>\nattempting click action\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #1\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #2\n  waiting 20ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #3\n  waiting 100ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #4\n  waiting 100ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #5\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #6\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #7\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #8\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #9\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #10\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #11\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #12\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #13\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #14\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #15\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #16\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #17\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #18\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #19\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #20\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #21\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #22\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #23\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #24\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #25\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #26\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #27\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #28\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #29\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #30\n  waiting 500ms\n  waiting for element to be visible, enabled and stable\n  element is visible, enabled and stable\n  scrolling into view if needed\n  done scrolling\n  <button class=\"half\" _ngcontent-ng-c2281559659=\"\">…</button> from <kfpayh-floating-slider _nghost-ng-c3446459309=\"\" _ngcontent-ng-c1912319…>…</kfpayh-floating-slider> subtree intercepts pointer events\nretrying click action, attempt #31\n  waiting 500ms\n============================================================"
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().click",
+              "status": "pass",
+              "duration": 309,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 11,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 18,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Dashboard', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(.secondary-country a >> internal:has-not-text=/Level & Function|Model Job Match & Level/ >> nth=0)",
+              "status": "pass",
+              "duration": 43,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByTestId('global-nav-menu-btn').waitFor",
+              "status": "pass",
+              "duration": 14,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByTestId('global-nav-menu-btn').click",
+              "status": "pass",
+              "duration": 103,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Explore tools and features', { exact: true }).waitFor",
+              "status": "pass",
+              "duration": 1386,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByTestId(/^nav-menu-item/).filter({ hasText: 'Organization Data' }).click",
+              "status": "pass",
+              "duration": 302,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 394,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 10,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('link', { name: 'Leaderboard' }).waitFor",
+              "status": "pass",
+              "duration": 6757,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText(/Welcome.*set up your organization/i).isVisible",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 10,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 12,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('link', { name: 'Leaderboard' }).click",
+              "status": "pass",
+              "duration": 331,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 935,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Onboarding', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 5475,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Data Submission', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 10,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 11,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 15,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should open Compensation and Benefit survey and verify title",
+          "status": "pass",
+          "duration": 16038,
+          "error": "",
+          "steps": [
+            {
+              "title": "page.waitForURL",
+              "status": "pass",
+              "duration": 20,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Onboarding', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 13,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Data Submission', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 15,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 12,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible",
+              "status": "pass",
+              "duration": 22,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "mouse.move",
+              "status": "pass",
+              "duration": 39,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForTimeout",
+              "status": "pass",
+              "duration": 504,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().waitFor",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().scrollIntoViewIfNeeded",
+              "status": "pass",
+              "duration": 70,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Compensation and Benefit survey', { exact: true }).first().click",
+              "status": "pass",
+              "duration": 13790,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).waitFor",
+              "status": "pass",
+              "duration": 1432,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 33,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        },
+        {
+          "title": "should complete data submission leaderboard and multi-entity flow",
+          "status": "fail",
+          "duration": 3133,
+          "error": "Multi-Entity link is disabled for this account",
+          "steps": [
+            {
+              "title": "locator.getByRole('heading', { name: 'Compensation and Benefit survey', level: 2 }).isVisible",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.isVisible(b.tab-header >> internal:has-text=/^Data Submission$/)",
+              "status": "pass",
+              "duration": 7,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "mouse.move",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForTimeout",
+              "status": "pass",
+              "duration": 509,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(b.tab-header >> internal:has-text=/^Data Submission$/)",
+              "status": "pass",
+              "duration": 29,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(b.tab-header >> internal:has-text=/^Data Submission$/)",
+              "status": "pass",
+              "duration": 42,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 19,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 27,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.hover(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 48,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(a.leaderboard-text)",
+              "status": "pass",
+              "duration": 7,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(a.leaderboard-text)",
+              "status": "pass",
+              "duration": 49,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.waitForTimeout",
+              "status": "pass",
+              "duration": 2003,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "mouse.move",
+              "status": "pass",
+              "duration": 15,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Data Groups', { exact: true }).isVisible",
+              "status": "pass",
+              "duration": 24,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.isVisible(button >> internal:has-text=/^Company$|^Country$/ >> nth=0)",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "mouse.move",
+              "status": "pass",
+              "duration": 15,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(button >> internal:has-text=/^Company$|^Country$/ >> nth=0)",
+              "status": "pass",
+              "duration": 36,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.click(button >> internal:has-text=/^Company$|^Country$/ >> nth=0)",
+              "status": "pass",
+              "duration": 39,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByRole('menuitem', { name: 'Data Groups' }).or(getByText('Data Groups', { exact: true })).isVisible",
+              "status": "pass",
+              "duration": 8,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getByText('Data Groups', { exact: true }).or(getByText('Assigned To You', { exact: true })).first().waitFor",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "expect.toBeVisible",
+              "status": "pass",
+              "duration": 7,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 9,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.scrollIntoViewIfNeeded(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 47,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.hover(.data-submission-tab-width >> nth=0)",
+              "status": "pass",
+              "duration": 47,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(a.leaderboard-text)",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.waitFor(a.multi-entity-text)",
+              "status": "pass",
+              "duration": 6,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "locator.getAttribute(a.multi-entity-text)",
+              "status": "pass",
+              "duration": 7,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "page.screenshot",
+              "status": "pass",
+              "duration": 144,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "attach \"screenshot\"",
+              "status": "pass",
+              "duration": 1,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "afterAll hook",
+              "status": "pass",
+              "duration": 262,
+              "depth": 1,
+              "error": ""
+            },
+            {
+              "title": "browserContext.close",
+              "status": "pass",
+              "duration": 67,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "attach \"screenshot\"",
+              "status": "pass",
+              "duration": 2,
+              "depth": 2,
+              "error": ""
+            },
+            {
+              "title": "fixture: browser",
+              "status": "pass",
+              "duration": 745,
+              "depth": 1,
+              "error": ""
+            }
+          ]
+        }
+      ],
+      "attachments": [
+        {
+          "name": "screenshot",
+          "relativePath": "screenshots/1782145701988-test-failed-1.png",
+          "contentType": "image/png"
+        },
+        {
+          "name": "screenshot",
+          "relativePath": "screenshots/1782145701997-test-failed-2.png",
+          "contentType": "image/png"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 7,
+    "failed": 1,
+    "skipped": 0,
+    "duration": 108446.924,
+    "status": "failed",
+    "scenarios": {
+      "total": 8,
+      "passed": 7,
+      "failed": 1,
+      "skipped": 0
+    }
+  },
+  "generatedAt": "22/6/2026, 9:58:21 pm"
+}

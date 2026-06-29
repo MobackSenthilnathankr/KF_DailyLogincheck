@@ -1,0 +1,40 @@
+{
+  "name": "playwright-automation-framework",
+  "version": "1.0.0",
+  "description": "Playwright JavaScript automation testing framework with Page Object Model",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chrome": "playwright test --project=chrome",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:allure": "playwright test && npm run allure:serve",
+    "test:share": "playwright test && npm run allure:share",
+    "report": "playwright show-report",
+    "allure:clean": "node scripts/allure-report.js clean",
+    "allure:generate": "node scripts/allure-report.js generate",
+    "allure:share": "node scripts/allure-report.js share",
+    "allure:open": "node scripts/allure-report.js open",
+    "allure:serve": "node scripts/allure-report.js serve",
+    "codegen": "playwright codegen"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "e2e"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.38.1",
+    "allure-commandline": "^2.27.0",
+    "allure-playwright": "^2.15.1",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
