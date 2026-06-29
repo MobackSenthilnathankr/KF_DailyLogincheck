@@ -51,12 +51,15 @@ jobs:
 
       - name: Setup test environment
         uses: ./.github/actions/setup-playwright
+        with:
+          node-version: '22'
 
       - name: Validate required secrets
         shell: bash
         run: node scripts/validate-ci-secrets.js
 
       - name: Run smoke tests
+        shell: bash
         run: npm run test:smoke
 
       - name: Upload Playwright HTML report
@@ -78,7 +81,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload test results
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ env.ENV }}

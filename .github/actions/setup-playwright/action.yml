@@ -5,11 +5,11 @@ inputs:
   node-version:
     description: Node.js version
     required: false
-    default: '20'
+    default: '22'
   browser:
     description: Playwright browser to install
     required: false
-    default: chrome
+    default: chromium
 
 runs:
   using: composite

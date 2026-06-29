@@ -56,7 +56,7 @@ module.exports = defineConfig({
     {
       name: 'chrome',
       use: {
-        channel: 'chrome',
+        ...(process.env.CI ? {} : { channel: 'chrome' }),
         viewport: null,
         deviceScaleFactor: undefined,
       },

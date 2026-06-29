@@ -107,15 +107,17 @@ Both workflows use the shared setup action at `.github/actions/setup-playwright/
 
 ### Required GitHub secrets
 
-Configure these under **Settings → Secrets and variables → Actions**:
+Configure these under **Settings → Secrets and variables → Actions** (use the same values from your local `.env`):
 
 | Secret | Required | Description |
 |--------|----------|-------------|
-| `TEST_USERNAME` | Yes | Primary login email |
-| `TEST_PASSWORD` | Yes | Password for non-prod environments |
+| `TEST_USERNAME` | **Yes** | Primary login email |
+| `TEST_PASSWORD` | **Yes** | Password for non-prod environments |
 | `TEST_USERNAME_FALLBACK` | No | Fallback login if primary fails |
 | `TEST_CLIENT_NAME` | No | Client name when client selection page appears |
 | `TEST_PAMS_ID` | No | PAMS ID for client selection |
+
+If secrets are missing, the workflow fails at **Validate required secrets** with exit code 1 and no report artifacts are produced.
 
 Validate secrets locally (simulates CI):
 

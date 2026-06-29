@@ -43,19 +43,29 @@ jobs:
 
       - name: Setup test environment
         uses: ./.github/actions/setup-playwright
+        with:
+          node-version: '22'
 
       - name: Validate required secrets
         shell: bash
         run: node scripts/validate-ci-secrets.js
 
+      - name: Verify Playwright install
+        shell: bash
+        run: |
+          node --version
+          npx playwright --version
+          npx playwright install --dry-run chromium
+
       - name: Run E2E tests
-        run: npm run test:e2e
+        shell: bash
+        run: npm run test:smoke
 
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-regression-${{ inputs.environment }}
+          name: playwright-report-${{ inputs.environment }}
           path: playwright-report/
           retention-days: 30
           if-no-files-found: warn
@@ -64,18 +74,37 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report-regression-${{ inputs.environment }}
+          name: allure-report-${{ inputs.environment }}
           path: allure-report/
           retention-days: 30
           if-no-files-found: warn
 
       - name: Upload test results
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-regression-${{ inputs.environment }}
+          name: test-results-${{ inputs.environment }}
           path: |
             test-results/
             allure-results/
           retention-days: 14
           if-no-files-found: warn
+
+      - name: Publish job summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "## Playwright E2E Tests"
+            echo ""
+            echo "| Setting | Value |"
+            echo "|---------|-------|"
+            echo "| Environment | \`${{ inputs.environment }}\` |"
+            echo "| Status | \`${{ job.status }}\` |"
+            echo ""
+            if [ "${{ job.status }}" != "success" ]; then
+              echo "### Troubleshooting"
+              echo "- Confirm \`TEST_USERNAME\` and \`TEST_PASSWORD\` are set in **Settings → Secrets and variables → Actions**"
+              echo "- Download **test-results** artifact for traces and screenshots"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

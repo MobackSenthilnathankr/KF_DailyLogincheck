@@ -15,6 +15,9 @@ function validateCiSecrets() {
   }
 
   if (missing.length > 0) {
+    missing.forEach((secret) => {
+      console.error(`::error title=Missing GitHub secret::${secret} is not set.`);
+    });
     throw new Error(
       `Missing required GitHub Actions secrets: ${missing.join(', ')}. ` +
       'Configure them under Settings → Secrets and variables → Actions.',
